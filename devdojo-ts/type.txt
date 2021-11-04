@@ -1,0 +1,258 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta http-equiv="X-UA-Compatible" content="IE=edge">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Calculadora</title>
+    <style>
+        *{
+            margin: 0;
+            padding: 0;
+        }
+        .fundo{
+            background-image: linear-gradient(45deg, black,white);
+            height: 100vh;
+            color: white;
+            font-family: Arial, Helvetica, sans-serif;
+            text-align: center;
+        }
+        .Caculadora{
+            position: absolute;
+            background-color: rgba(0, 0, 0, 0.8);
+            top: 50%;
+            left: 50%;
+            transform: translate(-50%,-50%);
+            border-radius: 15px;
+            padding: 15px;
+
+        }
+        .botao{
+            width: 50px;
+            height: 50px;
+            font-size: 25px;
+            cursor: pointer;
+            background-color: rgb(31, 31, 31);
+            margin: 3px;
+            border: none;
+            color: aliceblue;           
+        }
+        .botao:hover{
+            background-color: black;
+        }
+        #resultado{
+            background-color: aliceblue;
+            width: 207px;
+            height: 30px;
+            margin: 5px;
+            font-size: 25px;
+            color: black;
+            text-align: right;
+            padding: 5px;
+        }
+    </style>
+</head>
+<body>
+     <div class="fundo"> 
+        <h1>Calculadora em TypeScript</h1>
+        <div class="Caculadora">
+           <h1>Calculadora</h1>
+           <p id="resultado"></p>
+           <table>
+                <tr>
+                     <td><button class="botao" onclick ="clean()">C</button></td>
+                     <td><button class="botao" onclick ="back()"><</button></td>
+                     <td><button class="botao" onclick ="numero('/')">/</button></td>
+                     <td><button class="botao" onclick ="numero('*')">X</button></td>                
+                <tr>
+                     <td><button class="botao" onclick ="numero('7')">7</button></td>
+                     <td><button class="botao" onclick ="numero('8')">8</button></td>
+                     <td><button class="botao" onclick ="numero('9')">9</button></td>
+                     <td><button class="botao" onclick ="numero('-')">-</button></td>
+                </tr> 
+                <tr>
+                     <td><button class="botao" onclick ="numero('4')">4</button></td>
+                     <td><button class="botao" onclick ="numero('5')">5</button></td>
+                     <td><button class="botao" onclick ="numero('6')">6</button></td>
+                     <td><button class="botao" onclick ="numero('+')">+</button></td>
+                </tr>
+                <tr>
+                     <td><button class="botao" onclick ="numero('1')">1</button></td>
+                     <td><button class="botao" onclick ="numero('2')">2</button></td>
+                     <td><button class="botao" onclick ="numero('3')">3</button></td>
+                     <td rowspan="2"><button class="botao" style="height: 106px;" onclick ="calcular()">=</button></td>
+                </tr>
+                <tr>
+                     <td colspan="2"><button class="botao" style="width: 106px;" onclick ="numero('0')">0</button></td>
+                     <td><button class="botao" onclick ="numero('.')">.</button></td>                
+                </tr>          
+            </table>
+        </div>
+    </div> 
+    <script>
+        function numero(num)
+        {
+            let numero = document.getElementById('resultado').innerHTML;
+            const div = document.getElementById('resultado').innerHTML = numero + num
+        }
+        function clean()
+        {
+            const div = document.getElementById('resultado').innerHTML = "";
+        }
+        function back()
+        {
+            let resultado = document.getElementById('resultado').innerHTML;
+            const div = document.getElementById('resultado').innerHTML = resultado.substring(0, resultado.length -1);
+        }
+        function calcular()
+        {
+            let resultado = document.getElementById('resultado').innerHTML;
+            if(resultado)
+            {
+                const div = document.getElementById('resultado').innerHTML = eval(resultado);
+            }
+            else
+            {
+                const div = document.getElementById('resultado').innerHTML = "0"
+            } 
+        }
+    </script>          
+</body>
+</html>
+
+
+
+
+
+
+import { question } from "readline-sync";
+// Aceitar a entrada de comando no console
+
+type Operador = '+' | '-' | '*' | '/';
+
+
+function main(): void
+{
+    const primeiraStr:string = question('Digite o primeiro numero:\n');
+    const operador: string = question('Digite o operador:\n');
+    const segundaStr: string = question('Digite o segundo numero\n');
+    
+    
+    const validInput:boolean = isNumber(primeiraStr) && isOperador(operador) && isNumber(segundaStr);
+    // Verifica se tudo e valido em uma unica instrução
+
+    if (validInput)
+    {
+        const primeiroNum: number = parseInt(primeiraStr);
+        const segundoNum: number = parseInt(segundaStr);
+        const resultado = calculate(primeiroNum, operador as Operador, segundoNum);
+        console.log(resultado);
+        //converte seu primeiro argumento para uma string e resultado mostra resultado
+    }
+    else
+    {
+        console.log('\nInformacao invalida\n');
+        main()
+    }  
+}
+
+function calculate(primeiroNum: number, operador: Operador, segundoNum: number)
+// Realiza o calculo de primeiro numero com o operador e segundo numero
+{
+
+    switch(operador)
+    {
+        case '+':
+            return primeiroNum + segundoNum;
+        case '-':
+            return primeiroNum - segundoNum;
+        case '*':
+            return primeiroNum * segundoNum;
+        case '/':
+            return primeiroNum / segundoNum;
+    }
+}
+
+function isOperador(operador: string): boolean
+// recebe tipo de operador
+{
+    
+    switch(operador)
+    {
+        case '+':
+        case '-':
+        case '*':
+        case '/':
+            return true;
+        default:
+            return false;    
+    }
+}
+
+function isNumber(str: string): boolean
+// verificação se é numero e convert para uma string
+{
+    const podeSerNum = parseInt(str);
+    const isNum: boolean = !isNaN(podeSerNum);
+    return isNum;
+}
+
+main();
+
+
+
+
+
+
+
+"use strict";
+exports.__esModule = true;
+var readline_sync_1 = require("readline-sync");
+function main() {
+    var primeiraStr = (0, readline_sync_1.question)('Digite o primeiro numero:\n');
+    var operador = (0, readline_sync_1.question)('Digite o operador:\n');
+    var segundaStr = (0, readline_sync_1.question)('Digite o segundo numero\n');
+    var validInput = isNumber(primeiraStr) && isOperador(operador) && isNumber(segundaStr);
+    // Verifica se tudo e valido em uma unica instrução
+    if (validInput) {
+        var primeiroNum = parseInt(primeiraStr);
+        var segundoNum = parseInt(segundaStr);
+        var resultado = calculate(primeiroNum, operador, segundoNum);
+        console.log(resultado);
+        //converte seu primeiro argumento para uma string e resultado mostra resultado
+    }
+    else {
+        console.log('\nInformacao invalida\n');
+        main();
+    }
+}
+function calculate(primeiroNum, operador, segundoNum) {
+    switch (operador) {
+        case '+':
+            return primeiroNum + segundoNum;
+        case '-':
+            return primeiroNum - segundoNum;
+        case '*':
+            return primeiroNum * segundoNum;
+        case '/':
+            return primeiroNum / segundoNum;
+    }
+}
+function isOperador(operador) {
+    switch (operador) {
+        case '+':
+        case '-':
+        case '*':
+        case '/':
+            return true;
+        default:
+            return false;
+    }
+}
+function isNumber(str) {
+    var podeSerNum = parseInt(str);
+    var isNum = !isNaN(podeSerNum);
+    return isNum;
+}
+main();
+
